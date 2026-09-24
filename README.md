@@ -1,3 +1,3 @@
 # BANG
 Praxe
-WORDPRESS - použit doma nejde upolad velky file je
+# WORDPRESS - použit doma nejde upolad velky file je
