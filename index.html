@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BANG! - Webový portál</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Georgia, serif;
+    background-color: #241509;
+    color: #eee2c0;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .obsah {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ====== HLAVIČKA ====== */
+  header {
+    background-color: #4a2e1c;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid #b4832f;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  header h1 {
+    color: #d9a94a;
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  nav a {
+    color: #eee2c0;
+    text-decoration: none;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 3px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  nav a:hover {
+    background-color: #b4832f;
+    color: #2c1a10;
+  }
+
+  /* ====== ÚVODNÍ SEKCE ====== */
+  .hero {
+    text-align: center;
+    padding: 70px 20px 50px;
+  }
+
+  .hero h2 {
+    font-size: 42px;
+    color: #b4382a;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: #cbb98d;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  /* ====== SEKCE OBECNĚ ====== */
+  section {
+    padding: 35px 0;
+  }
+
+  .popis {
+    color: #cbb98d;
+    max-width: 650px;
+    margin: -5px 0 20px;
+    font-size: 15px;
+  }
+
+  h2.nadpis {
+    color: #d9a94a;
+    border-bottom: 2px solid #b4832f;
+    padding-bottom: 10px;
+    font-size: 26px;
+  }
+
+  h3.podnadpis {
+    color: #b4832f;
+    margin-top: 30px;
+    font-size: 18px;
+    border-left: 4px solid #b4832f;
+    padding-left: 10px;
+  }
+
+  /* ====== FILTR TLAČÍTKA ====== */
+  .filtry {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 5px 0 20px;
+  }
+
+  .filtry button {
+    background-color: #4a2e1c;
+    color: #eee2c0;
+    border: 1px solid #b4832f;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .filtry button:hover,
+  .filtry button.aktivni {
+    background-color: #b4832f;
+    color: #2c1a10;
+  }
+
+  /* ====== KARTY POSTAV ====== */
+  .karty {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+    padding: 5px 0 10px;
+  }
+
+  .postava {
+    background-color: #eee2c0;
+    color: #2c1a10;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid #b4832f;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .postava:hover {
+    transform: translateY(-4px);
+    box-shadow: 4px 6px 0 rgba(0,0,0,0.35);
+  }
+
+  .ikonka {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #8a2e1e;
+    color: #eee2c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .postava h3 {
+    margin: 0 0 6px;
+    color: #8a2e1e;
+    font-size: 17px;
+  }
+
+  .postava p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .role {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #b4832f;
+    color: #2c1a10;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+
+  .stitky {
+    margin-top: 10px;
+  }
+
+  .stitek {
+    display: inline-block;
+    font-size: 10px;
+    background-color: #8a2e1e;
+    color: #eee2c0;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin: 2px 4px 0 0;
+  }
+
+  /* ====== FORMULÁŘ ====== */
+  form {
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: #33200f;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #4a2e1c;
+  }
+
+  label {
+    font-size: 13px;
+    color: #cbb98d;
+    margin-top: 8px;
+  }
+
+  input, textarea, select {
+    padding: 9px;
+    border-radius: 4px;
+    border: 1px solid #b4832f;
+    font-family: Georgia, serif;
+    background-color: #eee2c0;
+    color: #2c1a10;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    outline: 2px solid #d9a94a;
+  }
+
+  button[type="submit"] {
+    margin-top: 15px;
+    background-color: #b4382a;
+    color: white;
+    padding: 11px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #93291c;
+  }
+
+  /* ====== PATIČKA ====== */
+  footer {
+    text-align: center;
+    padding: 25px 20px;
+    color: #b4832f;
+    font-size: 13px;
+    border-top: 2px solid #4a2e1c;
+    margin-top: 30px;
+  }
+
+  /* ====== MOBIL ====== */
+  @media (max-width: 600px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .hero h2 {
+      font-size: 30px;
+    }
+    .karty {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BANG!</h1>
+  <nav>
+    <a href="#hlavni">Hlavní strana</a>
+    <a href="#postavy">Postavy</a>
+    <a href="#rozsireni">Rozšíření</a>
+    <a href="#pravidla">Pravidla</a>
+    <a href="#kontakt">Kontakt / Registrace</a>
+  </nav>
+</header>
+
+<section id="hlavni" class="hero">
+  <h2>Vítej na portálu hry BANG!</h2>
+  <p>Vše o postavách, pravidlech a turnajích westernové karetní hry BANG! pro 4 až 7 hráčů.</p>
+</section>
+
+<div class="obsah">
+
+  <section id="postavy">
+    <h2 class="nadpis">Postavy</h2>
+    <p class="popis">Osm hratelných postav rozdělených do dvou skupin - Zákon a Vyvrhelové. Každá má vlastní schopnost, která mění způsob hry. Karty jde filtrovat podle role.</p>
+
+    <div class="filtry">
+      <button onclick="filtrovat('vse')">Vše</button>
+      <button onclick="filtrovat('Šerif')">Šerif</button>
+      <button onclick="filtrovat('Zástupce')">Zástupce</button>
+      <button onclick="filtrovat('Bandita')">Bandita</button>
+      <button onclick="filtrovat('Renegát')">Renegát</button>
+    </div>
+
+    <h3 class="podnadpis">Kategorie: Zákon</h3>
+    <div class="karty" id="karty-zakon">
+      <div class="postava" data-role="Šerif">
+        <div class="ikonka">W</div>
+        <span class="role">Šerif</span>
+        <h3>Willy the Kid</h3>
+        <p>Může za kolo zahrát libovolný počet karet Bang!.</p>
+        <div class="stitky">
+          <span class="stitek">zbraně</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+      <div class="postava" data-role="Zástupce">
+        <div class="ikonka">R</div>
+        <span class="role">Zástupce</span>
+        <h3>Rose Doolan</h3>
+        <p>Vidí ostatní hráče, jako by byli blíž.</p>
+        <div class="stitky">
+          <span class="stitek">dosah</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+      <div class="postava" data-role="Šerif">
+        <div class="ikonka">C</div>
+        <span class="role">Šerif</span>
+        <h3>Calamity Janet</h3>
+        <p>Může zahrát Mine! jako Bang! a naopak.</p>
+        <div class="stitky">
+          <span class="stitek">karty</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+      <div class="postava" data-role="Zástupce">
+        <div class="ikonka">J</div>
+        <span class="role">Zástupce</span>
+        <h3>Jourdonnais</h3>
+        <p>Jako by měl pořád v ruce kartu Barrel navíc.</p>
+        <div class="stitky">
+          <span class="stitek">obrana</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="podnadpis">Kategorie: Vyvrhelové</h3>
+    <div class="karty" id="karty-vyvrhele">
+      <div class="postava" data-role="Bandita">
+        <div class="ikonka">B</div>
+        <span class="role">Bandita</span>
+        <h3>Bart Cassidy</h3>
+        <p>Když ztratí život, hned si dobere kartu navíc.</p>
+        <div class="stitky">
+          <span class="stitek">dobírání</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+      <div class="postava" data-role="Bandita">
+        <div class="ikonka">S</div>
+        <span class="role">Bandita</span>
+        <h3>Slab the Killer</h3>
+        <p>Proti němu musí ostatní zahrát dvě karty Mine!, ne jednu.</p>
+        <div class="stitky">
+          <span class="stitek">útok</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+      <div class="postava" data-role="Renegát">
+        <div class="ikonka">V</div>
+        <span class="role">Renegát</span>
+        <h3>Vulture Sam</h3>
+        <p>Sebere karty po každém zemřelém hráči.</p>
+        <div class="stitky">
+          <span class="stitek">karty</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+      <div class="postava" data-role="Renegát">
+        <div class="ikonka">P</div>
+        <span class="role">Renegát</span>
+        <h3>Pedro Ramirez</h3>
+        <p>První dobíranou kartu si může vzít z odhazovacího balíčku.</p>
+        <div class="stitky">
+          <span class="stitek">dobírání</span>
+          <span class="stitek">základní hra</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rozsireni">
+    <h2 class="nadpis">Rozšíření</h2>
+    <p class="popis">Oficiální rozšíření, která přidávají nové postavy, karty a herní mechaniky do základní hry.</p>
+    <div class="karty">
+      <div class="postava">
+        <h3>Divoký západ</h3>
+        <p>Přidává čtyři nové postavy a nové typy karet.</p>
+        <div class="stitky"><span class="stitek">oficiální</span></div>
+      </div>
+      <div class="postava">
+        <h3>Město duchů</h3>
+        <p>Postavy mohou hrát i po vlastní smrti jako duchové.</p>
+        <div class="stitky"><span class="stitek">oficiální</span></div>
+      </div>
+      <div class="postava">
+        <h3>Vysoké slunce</h3>
+        <p>Každé kolo se mění podmínky pro celý stůl.</p>
+        <div class="stitky"><span class="stitek">oficiální</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pravidla">
+    <h2 class="nadpis">Pravidla</h2>
+    <p class="popis">Stručný přehled toho, jak jedno kolo hry probíhá - víc detailů najdeš v pravidlech k balíčku.</p>
+    <p>1. Na začátku kola si hráč dobere dvě karty.</p>
+    <p>2. Kartou Bang! může napadnout soupeře v dosahu.</p>
+    <p>3. Napadený hráč se může bránit kartou Mine!.</p>
+    <p>4. Hra končí smrtí šerifa nebo všech vyvrhelů.</p>
+  </section>
+
+  <section id="kontakt">
+    <h2 class="nadpis">Kontakt a turnaje</h2>
+    <p class="popis">Máš dotaz k pravidlům nebo se chceš přihlásit na turnaj? Napiš nám přes formulář.</p>
+    <form>
+      <label for="jmeno">Jméno</label>
+      <input type="text" id="jmeno" name="jmeno" placeholder="Jméno" required>
+
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="E-mail" required>
+
+      <label for="typ">Typ dotazu</label>
+      <select id="typ" name="typ">
+        <option>Dotaz na pravidla</option>
+        <option>Registrace na turnaj</option>
+        <option>Jiné</option>
+      </select>
+
+      <label for="zprava">Zpráva</label>
+      <textarea id="zprava" name="zprava" placeholder="Zpráva" rows="4"></textarea>
+
+      <button type="submit">Odeslat</button>
+    </form>
+  </section>
+
+</div>
+
+<script>
+  function filtrovat(role) {
+    var postavy = document.querySelectorAll(".postava[data-role]");
+    postavy.forEach(function (p) {
+      if (role === "vse" || p.dataset.role === role) {
+        p.style.display = "block";
+      } else {
+        p.style.display = "none";
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
